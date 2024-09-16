@@ -1,10 +1,12 @@
 package fr.prog.progFonct.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import fr.prog.progFonct.domain.Fruit;
 import fr.prog.progFonct.domain.Store;
 
+/**
+ * Test class for {@link StoreService}
+ */
 @SpringBootTest
 public class StoreServiceTest {
 
@@ -35,6 +40,20 @@ public class StoreServiceTest {
 		List<Fruit> fruits = List.of(fruit1, fruit2, fruit3, fruit4, fruit5, fruit6, fruit7);
 		
 		this.store = new Store("Store name", fruits);
+	}
+	
+	@Test
+	void test_added_product_should_exist_in_store () {
+		Optional<Fruit> optFruit = storeService.findFruitByName(store, "Banana");
+		
+		assertTrue(optFruit.isPresent());
+	}
+	
+	@Test
+	void test_non_added_product_should_not_exist_in_store () {
+		Optional<Fruit> optFruit = storeService.findFruitByName(store, "Iphone");
+		
+		assertFalse(optFruit.isPresent());
 	}
 	
 	@Test

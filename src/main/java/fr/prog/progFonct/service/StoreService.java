@@ -10,22 +10,14 @@ import org.springframework.stereotype.Service;
 import fr.prog.progFonct.domain.Fruit;
 import fr.prog.progFonct.domain.Store;
 import fr.prog.progFonct.domain.struct.CreateFruitDTO;
+import fr.prog.progFonct.service.Iservice.IStoreService;
 
 /**
  * Store service
  */
 @Service
-public class StoreService {
+public class StoreService implements IStoreService {
 
-	/**
-	 * Return billed amount or zero if asked quantity is above {@link Fruit} stock
-	 * or {@link Fruit} does not exist
-	 * 
-	 * @param store
-	 * @param fruitName
-	 * @param quantity
-	 * @return billed amount or zero
-	 */
 	public BigDecimal sellFruit(Store store, String fruitName, int quantity) {
 		if (IsFruitQuantityInStock(store, fruitName, quantity)) {
 			Optional<Fruit> optFruit = findFruitByName(store, fruitName);
@@ -46,13 +38,6 @@ public class StoreService {
 		return BigDecimal.ZERO;
 	}
 
-	/**
-	 * Add {@link CreateFruitDTO} to {@link Store} {@link Fruit} list
-	 * 
-	 * @param store
-	 * @param createFruitDTO
-	 * @return edited {@link Store}
-	 */
 	public Store addFruitToStore(Store store, CreateFruitDTO createFruitDTO) {
 		List<Fruit> fruits = store.getFruits() == null ? new ArrayList<Fruit>() : store.getFruits();
 		fruits.add(new Fruit(createFruitDTO.getName(), createFruitDTO.getStockQuantity(),
@@ -61,13 +46,6 @@ public class StoreService {
 		return store;
 	}
 	
-	/**
-	 * Add stock quantity to {@link Fruit}
-	 * @param store
-	 * @param fruitName
-	 * @param quantity
-	 * @return
-	 */
 	public Store addStockToExistingFruit(Store store, String fruitName, int quantity) {
 		Optional<Fruit> optFruit = findFruitByName(store, fruitName);
 		if (optFruit.isPresent()) {
@@ -82,12 +60,6 @@ public class StoreService {
 		return store;
 	}
 	
-	/**
-	 * Remove {@link Fruit} from given {@link Store}
-	 * @param store
-	 * @param fruitName
-	 * @return
-	 */
 	public Store removeFruitFromStore(Store store, String fruitName) {
 		store.setFruits(store.getFruits().stream()
 				.filter(f -> !f.getName().equalsIgnoreCase(fruitName))
@@ -95,26 +67,11 @@ public class StoreService {
 		return store;
 	}
 
-	/**
-	 * Check if given {@link Fruit} is available in quantity at given {@link Store}
-	 * 
-	 * @param store
-	 * @param fruitName
-	 * @param quantity
-	 * @return true if asked quantity is above stock, false otherwise
-	 */
 	public boolean IsFruitQuantityInStock(Store store, String fruitName, int quantity) {
 		return store.getFruits().stream().filter(f -> f.getName().equalsIgnoreCase(fruitName))
 				.anyMatch(f -> f.getStockQuantity() >= quantity);
 	}
 
-	/**
-	 * Find a {@link Fruit} by name in a given {@link Store}
-	 * 
-	 * @param store
-	 * @param fruitName
-	 * @return Optional of {@link Fruit}
-	 */
 	public Optional<Fruit> findFruitByName(Store store, String fruitName) {
 		return store.getFruits().stream().filter(fruit -> fruit.getName().equalsIgnoreCase(fruitName)).findAny();
 	}
