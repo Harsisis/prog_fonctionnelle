@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import fr.prog.progFonct.domain.Fruit;
@@ -17,6 +19,8 @@ import fr.prog.progFonct.service.Iservice.IStoreService;
  */
 @Service
 public class StoreService implements IStoreService {
+	
+	Logger logger = LoggerFactory.getLogger(StoreService.class);
 
 	public BigDecimal sellFruit(Store store, String fruitName, int quantity) {
 		if (IsFruitQuantityInStock(store, fruitName, quantity)) {
@@ -35,6 +39,7 @@ public class StoreService implements IStoreService {
 				return BigDecimal.valueOf(quantity).multiply(foundFruit.getUnitPice());
 			}
 		}
+		logger.info("Fruit not found or stock is insufficient");
 		return BigDecimal.ZERO;
 	}
 
@@ -43,6 +48,7 @@ public class StoreService implements IStoreService {
 		fruits.add(new Fruit(createFruitDTO.getName(), createFruitDTO.getStockQuantity(),
 				BigDecimal.valueOf(createFruitDTO.getUnitPice())));
 		store.setFruits(fruits);
+		logger.info("Fruit added to store");
 		return store;
 	}
 	
@@ -57,6 +63,7 @@ public class StoreService implements IStoreService {
 			}).toList();
 			store.setFruits(fruits);
 		}
+		logger.info("Fruit stock updated");
 		return store;
 	}
 	
@@ -64,6 +71,7 @@ public class StoreService implements IStoreService {
 		store.setFruits(store.getFruits().stream()
 				.filter(f -> !f.getName().equalsIgnoreCase(fruitName))
 				.toList());
+		logger.info("Fruit removed from store");
 		return store;
 	}
 
@@ -74,5 +82,13 @@ public class StoreService implements IStoreService {
 
 	public Optional<Fruit> findFruitByName(Store store, String fruitName) {
 		return store.getFruits().stream().filter(fruit -> fruit.getName().equalsIgnoreCase(fruitName)).findAny();
+	}
+
+	@Override
+	public void showStock(Store store) {
+		logger.info("Fruit from store : " + store.getName());
+		store.getFruits().stream()
+			.forEach(f -> logger.info("Fruit name : " + f.getName() + " | quantity : " + f.getStockQuantity()));
+		
 	}
 }

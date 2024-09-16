@@ -63,4 +63,10 @@ public interface IStoreService {
 	 * @return Optional of {@link Fruit}
 	 */
 	public Optional<Fruit> findFruitByName(Store store, String fruitName);
+	
+	/**
+	 * Display {@link Fruit}s stock
+	 * @param store
+	 */
+	public void showStock(Store store);
 }
