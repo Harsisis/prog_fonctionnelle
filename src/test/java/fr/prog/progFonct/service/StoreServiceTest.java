@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import fr.prog.progFonct.domain.Fruit;
 import fr.prog.progFonct.domain.Store;
+import fr.prog.progFonct.domain.struct.CreateFruitDTO;
 
 /**
  * Test class for {@link StoreService}
@@ -39,7 +40,7 @@ public class StoreServiceTest {
 		
 		List<Fruit> fruits = List.of(fruit1, fruit2, fruit3, fruit4, fruit5, fruit6, fruit7);
 		
-		this.store = new Store("Store name", fruits);
+		this.store = new Store("FruitStore", fruits);
 	}
 	
 	@Test
@@ -59,6 +60,7 @@ public class StoreServiceTest {
 	@Test
 	void test_stock_should_decrease_when_product_purchased () {
 		storeService.sellFruit(store, "Banana", 5);
+		storeService.showStock(store);
 		
 		assertThat(storeService.findFruitByName(store, "Banana").get().getStockQuantity()).isEqualTo(95);
 	}
@@ -66,6 +68,7 @@ public class StoreServiceTest {
 	@Test
 	void test_bill_amount_should_match_when_product_purchased () {
 		BigDecimal billAmount = storeService.sellFruit(store, "Banana", 5);
+		storeService.showStock(store);
 		
 		assertThat(billAmount).isEqualTo(BigDecimal.valueOf(10));
 	}
@@ -73,6 +76,7 @@ public class StoreServiceTest {
 	@Test
 	void test_stock_should_increase_when_stock_added () {
 		store = storeService.addStockToExistingFruit(store, "Apple", 10);
+		storeService.showStock(store);
 		
 		assertThat(storeService.findFruitByName(store, "Apple").get().getStockQuantity()).isEqualTo(110);
 	}
@@ -80,7 +84,31 @@ public class StoreServiceTest {
 	@Test
 	void test_product_should_be_null_when_product_removed () {
 		store = storeService.removeFruitFromStore(store, "Apple");
+		storeService.showStock(store);
 		
 		assertTrue(storeService.findFruitByName(store, "Apple").isEmpty());
+	}
+	
+	@Test
+	void test_scenario () {
+		Store store2 = new Store();
+		store2.setName("SCENARIO");
+		
+		storeService.addFruitToStore(store2, new CreateFruitDTO("Pomme", 10, 2));
+		storeService.addFruitToStore(store2, new CreateFruitDTO("Poire", 5, 2));
+		storeService.addFruitToStore(store2, new CreateFruitDTO("Ananas", 8, 2));
+		
+		storeService.addStockToExistingFruit(store2, "Pomme", 5);
+		storeService.addStockToExistingFruit(store2, "Poire", 8);
+		
+		storeService.sellFruit(store2, "Ananas", 2);
+		
+		storeService.showStock(store2);
+		
+		storeService.removeFruitFromStore(store2, "Ananas");
+		
+		storeService.showStock(store2);
+		
+		assertTrue(storeService.findFruitByName(store2, "Ananas").isEmpty());
 	}
 }

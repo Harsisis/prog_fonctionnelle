@@ -35,7 +35,8 @@ public class StoreService implements IStoreService {
 					return f;
 				}).toList();
 				store.setFruits(fruits);
-
+				
+				logger.info("Fruit "+fruitName+" sold from store "+store.getName());
 				return BigDecimal.valueOf(quantity).multiply(foundFruit.getUnitPice());
 			}
 		}
@@ -48,7 +49,7 @@ public class StoreService implements IStoreService {
 		fruits.add(new Fruit(createFruitDTO.getName(), createFruitDTO.getStockQuantity(),
 				BigDecimal.valueOf(createFruitDTO.getUnitPice())));
 		store.setFruits(fruits);
-		logger.info("Fruit added to store");
+		logger.info("Fruit "+createFruitDTO.getName()+" added to store "+store.getName());
 		return store;
 	}
 	
@@ -63,7 +64,7 @@ public class StoreService implements IStoreService {
 			}).toList();
 			store.setFruits(fruits);
 		}
-		logger.info("Fruit stock updated");
+		logger.info("Fruit "+fruitName+" stock updated from store "+store.getName());
 		return store;
 	}
 	
@@ -71,7 +72,7 @@ public class StoreService implements IStoreService {
 		store.setFruits(store.getFruits().stream()
 				.filter(f -> !f.getName().equalsIgnoreCase(fruitName))
 				.toList());
-		logger.info("Fruit removed from store");
+		logger.info("Fruit "+fruitName+" removed from store "+store.getName());
 		return store;
 	}
 
