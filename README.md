@@ -1,4 +1,4 @@
-# Programmation fonctionnelle
+# Programmation fonctionnelle - CADET Gauthier
 
 ## TP01 - boutique de fruits
 
