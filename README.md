@@ -66,3 +66,8 @@ Fruit : Poire | Quantity : 5
 Fruit : Citron | Quantity : 10
 */
 ```
+
+## TP03 - refonte du code
+Création de l'entité `Vegetable` et des services associés dans le but de refaire le TP01 en programmation fonctionnelle. 
+
+Ajout d'un test de scénation équivalent à celui du TP01
