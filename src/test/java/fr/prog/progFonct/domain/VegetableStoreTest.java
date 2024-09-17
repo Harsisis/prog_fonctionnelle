@@ -41,11 +41,13 @@ public class VegetableStoreTest {
 						.stockQuantity(8)
 						.unitPrice(BigDecimal.valueOf(2))
 						.build())
-				.orDefault()
+				.showStoreVegetables()
 				.updateVegetableStockQuantity("Tomate", 15)
 				.updateVegetableStockQuantity("Haricot", 13)
 				.updateVegetableStockQuantity("Aubergine", 6)
-				.removeVegetable("Aubergine");
+				.showStoreVegetables()
+				.removeVegetable("Aubergine")
+				.showStoreVegetables();
 		
 		assertFalse(store.findVegetable("Aubergine").isPresent());
 	}

@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import fr.prog.progFonct.service.FruitStoreService;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +16,8 @@ import lombok.Setter;
 @Setter
 @Builder
 public class Store {
+	private final Logger logger = LoggerFactory.getLogger(FruitStoreService.class);
+	
 	private String name;
 	private List<Fruit> fruits;
 	private List<Vegetable> vegetables;
@@ -38,7 +44,7 @@ public class Store {
 	 */
 	public Store removeVegetable(String vegetableName) {
 		List<Vegetable> vegetables = this.vegetables.stream()
-				.filter(v -> v.getName().equalsIgnoreCase(vegetableName))
+				.filter(v -> !v.getName().equalsIgnoreCase(vegetableName))
 				.toList();
 		return Store.builder()
 				.name(this.name)
@@ -79,6 +85,16 @@ public class Store {
 				.fruits(this.fruits)
 				.vegetables(vegetables)
 				.build();
+	}
+	
+	/**
+	 * Print vegetables
+	 * @return
+	 */
+	public Store showStoreVegetables() {
+		logger.info("Show vegetables");
+		this.vegetables.stream().forEach(v -> logger.info(v.getName()+" | "+v.getStockQuantity()));
+		return this;
 	}
 	
 	/**
