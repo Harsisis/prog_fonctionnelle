@@ -71,3 +71,9 @@ Fruit : Citron | Quantity : 10
 Création de l'entité `Vegetable` et des services associés dans le but de refaire le TP01 en programmation fonctionnelle. 
 
 Ajout d'un test de scénation équivalent à celui du TP01
+
+## TP04 - penalty
+
+Création d'un script TS pour le TP04 pour les penaltys
+
+Voir : `src/main/resources/TP_penalty/index.ts`
