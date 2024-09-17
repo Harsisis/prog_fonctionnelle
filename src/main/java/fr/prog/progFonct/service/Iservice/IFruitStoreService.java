@@ -7,7 +7,7 @@ import fr.prog.progFonct.domain.Fruit;
 import fr.prog.progFonct.domain.Store;
 import fr.prog.progFonct.domain.struct.CreateFruitDTO;
 
-public interface IStoreService {
+public interface IFruitStoreService {
 	/**
 	 * Return billed amount or zero if asked quantity is above {@link Fruit} stock
 	 * or {@link Fruit} does not exist

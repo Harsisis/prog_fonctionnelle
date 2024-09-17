@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 import fr.prog.progFonct.domain.Fruit;
 import fr.prog.progFonct.domain.Store;
 import fr.prog.progFonct.domain.struct.CreateFruitDTO;
-import fr.prog.progFonct.service.Iservice.IStoreService;
+import fr.prog.progFonct.service.Iservice.IFruitStoreService;
 
 /**
  * Store service
  */
 @Service
-public class StoreService implements IStoreService {
+public class FruitStoreService implements IFruitStoreService {
 	
-	Logger logger = LoggerFactory.getLogger(StoreService.class);
+	Logger logger = LoggerFactory.getLogger(FruitStoreService.class);
 
 	public BigDecimal sellFruit(Store store, String fruitName, int quantity) {
 		if (IsFruitQuantityInStock(store, fruitName, quantity)) {

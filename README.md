@@ -6,6 +6,8 @@
 
 ## TP02 - évaluation de code
 
+Le principal problème de ce code est la modification du stock et des Fruits avec mutation des données.
+
 ```ts
 let fruitsStock = [
   { id: 1, name: "Pomme", quantity: 10 },
