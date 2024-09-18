@@ -81,4 +81,9 @@ Voir : `src/main/resources/TP_penalty/index.ts`
 ### Refonte en java
 Refonte du code en ts pour la gestion des penalty en java.
 
-Utilisation des suppliers puis d'un reduce pour executer les actions. 
+Utilisation des suppliers puis d'un reduce pour executer les actions.
+
+## TP05 - pizzas
+
+1. Lecture des jsons 
+2. Ecriture tests + code
