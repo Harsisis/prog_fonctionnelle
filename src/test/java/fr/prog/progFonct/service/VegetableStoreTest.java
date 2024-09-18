@@ -1,4 +1,4 @@
-package fr.prog.progFonct.domain;
+package fr.prog.progFonct.service;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import fr.prog.progFonct.domain.Store;
+import fr.prog.progFonct.domain.Vegetable;
 import fr.prog.progFonct.service.FruitStoreService;
 import fr.prog.progFonct.service.VegetableStoreService;
 

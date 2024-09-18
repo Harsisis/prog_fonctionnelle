@@ -77,3 +77,8 @@ Ajout d'un test de scénation équivalent à celui du TP01
 Création d'un script TS pour le TP04 pour les penaltys
 
 Voir : `src/main/resources/TP_penalty/index.ts`
+
+### Refonte en java
+Refonte du code en ts pour la gestion des penalty en java.
+
+Utilisation des suppliers puis d'un reduce pour executer les actions. 
