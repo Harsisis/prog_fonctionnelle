@@ -18,4 +18,5 @@ public class PizzaOrder {
 	private int amount;
 	private int totalAmount;
 	private List<PizzaItem> items;
+	private int deliveryCosts;
 }
