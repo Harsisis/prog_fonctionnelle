@@ -51,7 +51,7 @@ public class PizzaOrderService {
 
 	public List<String> findOrderedOncePizzas(List<PizzaOrder> orders, List<Pizza> pizzas) {
 		Set<String> orderedOncePizzaIds = orders.stream().flatMap(order -> order.getItems().stream())
-				.collect(Collectors.groupingBy(PizzaItem::getPizzaId, Collectors.summingInt(PizzaItem::getQuantity)))
+				.collect(Collectors.groupingBy(PizzaItem::getPizzaId, Collectors.counting()))
 				.entrySet().stream().filter(e -> e.getValue() == 1).map(Map.Entry::getKey).collect(Collectors.toSet());
 
 		return pizzas.stream().filter(p -> orderedOncePizzaIds.contains(p.getId())).map(Pizza::getName).toList();
