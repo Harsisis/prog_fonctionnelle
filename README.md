@@ -2,7 +2,7 @@
 
 ## TP01 - boutique de fruits
 
---> run les tests de l'applciation
+--> run les tests de l'application : `FruitStoreService.java`
 
 ## TP02 - évaluation de code
 
@@ -72,6 +72,8 @@ Création de l'entité `Vegetable` et des services associés dans le but de refa
 
 Ajout d'un test de scénation équivalent à celui du TP01
 
+--> run les tests de l'application : `VegetableStoreTest.java`
+
 ## TP04 - penalty
 
 Création d'un script TS pour le TP04 pour les penaltys
@@ -83,7 +85,10 @@ Refonte du code en ts pour la gestion des penalty en java.
 
 Utilisation des suppliers puis d'un reduce pour executer les actions.
 
+--> run les tests de l'application : `PenaltyTest.java`
+
 ## TP05 - pizzas
 
-1. Lecture des jsons 
-2. Ecriture tests + code
+Création d'une base de données static avec la lecture des fichiers json fournis.
+
+--> run les tests de l'application : `StatePizzaTest.java`
