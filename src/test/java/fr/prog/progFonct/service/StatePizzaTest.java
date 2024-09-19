@@ -117,4 +117,9 @@ public class StatePizzaTest {
 	void test_average_delivery_costs() {
 		assertEquals(2.27, pizzaOrderService.findAverageDeliveryCosts(orders));
 	}
+	
+	@Test
+	void test_most_used_ingredient_with_cheese() {
+		assertEquals("Champignons", pizzaService.findMostUsedIngredientsWithCheese(pizzas));
+	}
 }

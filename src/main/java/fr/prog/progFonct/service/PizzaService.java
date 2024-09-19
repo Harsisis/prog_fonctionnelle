@@ -14,6 +14,7 @@ public class PizzaService {
 
 	private static final String TOMATE = "Tomate";
 	private static final List<String> MEAT_INGREDIENT_LIST = List.of("Jambon Cru", "Saucisson Piquant", "Jambon Cuît");
+	private static final List<String> CHEESE_INGREDIENT_LIST = List.of("Mozzarella", "Parmesan", "Gorgonzola", "Provola");
 
 	public Optional<Pizza> findPizzaById(List<Pizza> pizzas, String pizzaId) {
 		return pizzas.stream().filter(p -> p.getId().equals(pizzaId)).findFirst();
@@ -47,6 +48,18 @@ public class PizzaService {
 		return pizzas.stream().flatMap(p -> p.getIngredients().stream())
 				.collect(Collectors.groupingBy(i -> i, Collectors.counting()))
 				.entrySet().stream().filter(e -> e.getValue() == 1).map(Map.Entry::getKey).toList();
+	}
+
+	public String findMostUsedIngredientsWithCheese(List<Pizza> pizzas) {
+		return pizzas.stream()
+        .filter(pizza -> pizza.getIngredients().stream().anyMatch(CHEESE_INGREDIENT_LIST::contains)) 
+        .flatMap(pizza -> pizza.getIngredients().stream())
+        .filter(ingredient -> !CHEESE_INGREDIENT_LIST.contains(ingredient))
+        .collect(Collectors.groupingBy(ingredient -> ingredient, Collectors.counting()))
+        .entrySet().stream()
+        .max(Map.Entry.comparingByValue())
+        .map(Map.Entry::getKey)
+        .orElse("None");
 	}
 
 }
