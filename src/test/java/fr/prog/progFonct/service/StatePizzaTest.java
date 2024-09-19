@@ -5,19 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.prog.progFonct.domain.PenaltyState;
 import fr.prog.progFonct.domain.Pizza;
 import fr.prog.progFonct.domain.PizzaOrder;
 import fr.prog.progFonct.utils.PizzaJsonParser;
 
 /**
- * Test class for {@link PenaltyState}
+ * Test class for {@link PizzaService} and {@link pizzaOrderService}
  */
 @SpringBootTest
 public class StatePizzaTest {
@@ -53,7 +53,8 @@ public class StatePizzaTest {
 	
 	@Test
 	void test_unique_ingredient() {
-		assertTrue(true);
+		List<String> uniqueIngredients = List.of("Ail", "Gorgonzola", "Origan", "Courgettes", "Anchois", "Roquette", "Ananas", "Provola");
+		assertTrue(pizzaService.findIngredientsUseOnce(pizzas).containsAll(uniqueIngredients));
 	}
 	
 	@Test
@@ -62,47 +63,58 @@ public class StatePizzaTest {
 	}
 	
 	@Test
-	void test_never_ordered_pizza() {
-		assertTrue(true);
+	void test_never_ordered_pizzas() {
+		List<String> neverOrderedPizzas = List.of("Boscaiola", "Hawaï");
+		assertTrue(pizzaOrderService.findNeverOrderedPizzas(orders, pizzas).containsAll(neverOrderedPizzas));
 	}
 	
 	@Test
-	void test_average_pizza_order_amount() {
-		assertEquals(1.52, pizzaOrderService.findAveragePizzaOrdered(orders).getAsDouble());
+	void test_average_order_total_amount() {
+		assertEquals(25.25, pizzaOrderService.findAverageOrderTotalAmount(orders));
 	}
 	
 	@Test
 	void test_average_price_pizza_base_tomate() {
-		assertTrue(true);
+		assertEquals(9.77, pizzaService.findAveragePriceForPizzaWithBaseTomate(pizzas));
 	}
 	
 	@Test
 	void test_find_amount_of_non_meat_pizza() {
-		assertTrue(true);
+		assertEquals(7, pizzaService.findNonMeatPizzas(pizzas));
 	}
 	
 	@Test
 	void test_find_most_sold_pizza() {
-		assertTrue(true);
+		String pizzaId = pizzaOrderService.findMostSoldPizza(orders).orElse("not found");
+		Optional<Pizza> pizza = pizzaService.findPizzaById(pizzas, pizzaId);
+		
+		assertTrue(pizza.isPresent());
+		assertEquals("Diavola", pizza.get().getName());
 	}
 	
 	@Test
 	void test_average_amount_pizza_by_order() {
-		assertTrue(true);
+		assertEquals(1.52, pizzaOrderService.findAverageAmountPizzaByOrder(orders));
 	}
 	
 	@Test
 	void test_find_unused_ingredients_in_ordered_pizzas() {
-		assertTrue(true);
+		List<String> unusedIngredients = List.of("Ananas");
+		assertTrue(pizzaOrderService.findUnusedIngredientsInOrderedPizzas(orders, pizzas).containsAll(unusedIngredients));
 	}
 	
 	@Test
-	void test_find_pizza_ordered_once() {
-		assertTrue(true);
+	void test_find_pizzas_ordered_once() {
+		assertTrue(pizzaOrderService.findOrderedOncePizzas(orders, pizzas).isEmpty());
 	}
 	
 	@Test
 	void test_average_pizza_preparation_time() {
-		assertTrue(true);
+		assertEquals(9.01, pizzaOrderService.findAveragePreparationTime(orders));
+	}
+	
+	@Test
+	void test_average_delivery_costs() {
+		assertEquals(2.27, pizzaOrderService.findAverageDeliveryCosts(orders));
 	}
 }

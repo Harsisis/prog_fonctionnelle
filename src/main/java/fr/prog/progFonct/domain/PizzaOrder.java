@@ -1,5 +1,6 @@
 package fr.prog.progFonct.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -11,8 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PizzaOrder {
 	private String id;
-	private String orderedAt;
-	private String readyAt;
+	private LocalDateTime orderedAt;
+	private LocalDateTime readyAt;
 	private String orderType;
 	private String status;
 	private int amount;
